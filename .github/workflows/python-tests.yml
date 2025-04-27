@@ -37,6 +37,10 @@ jobs:
           pytest pytest-files --disable-warnings -v --html=reports/pytest_report.html
         continue-on-error: true   # Allow the next steps to run even if tests fail
 
+      - name: Rename the report to index.html
+        run: |
+            mv reports/pytest_report.html reports/index.html  # Rename the report
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
