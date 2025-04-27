@@ -1,4 +1,4 @@
-name: Python Tests
+name: Python Tests and Deploy Report
 
 on:
   workflow_dispatch:
@@ -28,20 +28,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pytest-html
 
-      - name: Check working directory
-        run: |
-          pwd  # Print current working directory
-        
-      - name: List files in the directory
-        run: |
-          ls -R  # List files recursively
-
       - name: Run tests and generate HTML report
         run: |
-            pytest pytest-files/test.py --maxfail=1 --disable-warnings -v --html=reports/pytest_report.html
+          pytest pytest-files/test.py --maxfail=1 --disable-warnings -v --html=reports/pytest_report.html
 
-      - name: Upload pytest HTML report
-        uses: actions/upload-artifact@v4
+      - name: Deploy pytest report to GitHub Pages
+        if: always()  # Deploy report even if tests fail
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: pytest-report
-          path: reports/pytest_report.html
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
+          publish_branch: gh-pages
+          destination_dir: .
