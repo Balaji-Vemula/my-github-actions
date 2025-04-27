@@ -35,6 +35,7 @@ jobs:
       - name: Run tests and generate HTML report
         run: |
           pytest pytest-files --disable-warnings -v --html=reports/pytest_report.html
+        continue-on-error: true   # Allow the next steps to run even if tests fail
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
