@@ -14,6 +14,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    permissions:
+        pages: write        # To deploy to Pages
+        id-token: write     # To authenticate for deployment
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
