@@ -28,13 +28,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pytest-html
 
+      - name: Check working directory
+        run: |
+          pwd  # Print current working directory
+        
       - name: List files in the directory
         run: |
-          ls -R
+          ls -R  # List files recursively
 
       - name: Run tests and generate HTML report
         run: |
-          pytest pytest-files -v --html=reports/pytest_report.html
+          pytest pytest-files --cache-clear -v --html=reports/pytest_report.html
 
       - name: Upload pytest HTML report
         uses: actions/upload-artifact@v4
