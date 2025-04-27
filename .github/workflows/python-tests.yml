@@ -34,7 +34,7 @@ jobs:
 
       - name: Run tests and generate HTML report
         run: |
-          pytest pytest-files/test.py --maxfail=1 --disable-warnings -v --html=reports/pytest_report.html
+          pytest pytest-files --maxfail=1 --disable-warnings -v --html=reports/pytest_report.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
