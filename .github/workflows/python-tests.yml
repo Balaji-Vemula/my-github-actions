@@ -38,12 +38,10 @@ jobs:
 
       - name: Run tests and generate HTML report
         run: |
-          pytest pytest-files/test.py --maxfail=1 --disable-warnings -v --html=reports/pytest_report.html
-        continue-on-error: true  # Continue even if the tests fail
-  
-      - name: Upload pytest HTML report as artifact
-        if: always()  # Upload even if the test step fails
-        uses: actions/upload-artifact@v2
+            pytest pytest-files/test.py --maxfail=1 --disable-warnings -v --html=reports/pytest_report.html
+
+      - name: Upload pytest HTML report
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-report
           path: reports/pytest_report.html
