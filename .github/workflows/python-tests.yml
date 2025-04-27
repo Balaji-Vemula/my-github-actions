@@ -32,14 +32,35 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pytest-html
 
-      - name: Run tests and generate HTML report
+      - name: Run tests and generate HTML report for test_0.py
         run: |
-          pytest pytest-files --disable-warnings -v --html=reports/pytest_report.html
-        continue-on-error: true   # Allow the next steps to run even if tests fail
+          pytest pytest-files/test_0.py --maxfail=5 --disable-warnings -v --html=reports/test_0_report.html
+        continue-on-error: true
 
-      - name: Rename the report to index.html
+      - name: Run tests and generate HTML report for test_1.py
         run: |
-            mv reports/pytest_report.html reports/index.html  # Rename the report
+          pytest pytest-files/test_1.py --maxfail=5 --disable-warnings -v --html=reports/test_1_report.html
+        continue-on-error: true
+
+      - name: Run tests and generate HTML report for test_2.py
+        run: |
+          pytest pytest-files/test_2.py --maxfail=5 --disable-warnings -v --html=reports/test_2_report.html
+        continue-on-error: true
+
+      - name: Create index.html for reports
+        run: |
+          echo '<!DOCTYPE html>' > reports/index.html
+          echo '<html>' >> reports/index.html
+          echo '<head><title>Test Reports</title></head>' >> reports/index.html
+          echo '<body>' >> reports/index.html
+          echo '<h1>Test Reports</h1>' >> reports/index.html
+          echo '<ul>' >> reports/index.html
+          echo '<li><a href="test_0_report.html">Test 0 Report</a></li>' >> reports/index.html
+          echo '<li><a href="test_1_report.html">Test 1 Report</a></li>' >> reports/index.html
+          echo '<li><a href="test_2_report.html">Test 2 Report</a></li>' >> reports/index.html
+          echo '</ul>' >> reports/index.html
+          echo '</body>' >> reports/index.html
+          echo '</html>' >> reports/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
